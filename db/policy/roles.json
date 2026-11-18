@@ -1,0 +1,78 @@
+{
+  "policy_version": 1,
+  "source_document": "docs/roles.md",
+  "schema_classifications": "pending schema inspection",
+  "column_classifications": [],
+  "query_operations": [
+    "select",
+    "filter",
+    "order",
+    "group",
+    "join",
+    "aggregate",
+    "derive"
+  ],
+  "roles": {
+    "owner": {
+      "configured": true,
+      "default_effect": "allow",
+      "allowed_categories": ["*"],
+      "denied_categories": [],
+      "conditional_categories": {}
+    },
+    "inventory_manager": {
+      "configured": true,
+      "default_effect": "deny",
+      "allowed_categories": [
+        "item_identity",
+        "descriptive_attributes",
+        "stock_levels",
+        "reorder_information"
+      ],
+      "denied_categories": ["monetary", "proxy"],
+      "conditional_categories": {
+        "units_sold": {
+          "fact": "stored_separately_from_amounts",
+          "expected": true
+        }
+      },
+      "default_ordering": "non_monetary",
+      "forbidden_surfaces": [
+        "answer_text",
+        "presentation",
+        "evidence",
+        "notes",
+        "errors",
+        "logs",
+        "traces"
+      ]
+    },
+    "purchase_manager": {
+      "configured": false,
+      "default_effect": "deny",
+      "allowed_categories": [],
+      "denied_categories": ["*"],
+      "conditional_categories": {},
+      "unconfigured_outcome": {
+        "status": "refused",
+        "reason_code": "role_not_configured"
+      }
+    }
+  },
+  "refusal": {
+    "status": "refused",
+    "reason_code": "outside_role_access",
+    "rule": "Offer information the role may access without naming hidden fields or values."
+  },
+  "no_data": {
+    "status": "no_data",
+    "reason_code": "data_not_available",
+    "rule": "Say what related information is available and invent nothing."
+  },
+  "evidence": {
+    "columns_must_be_role_visible": true
+  },
+  "conversation_isolation": {
+    "scope": "per_role"
+  }
+}

@@ -23,13 +23,13 @@ Roles are `owner`, `inventory_manager` and `purchase_manager`. A demo toggle in 
 README.md  PROJECT_SPEC.md  GLOSSARY.md  AGENTS.md
 ChangeLog.md  Decisions.md  Flow.md
 docs/        api.md  roles.md  ownership.md  schema.local.md (local only)
-backend/     app/ (api, agent, enforcement, guard)  tests/  .env.example
-frontend/    Next.js app  .env.local.example
+backend/     .env.example  pyproject.toml  app/ and tests/ added by owning lanes
+frontend/    .env.local.example  Next.js app added by Lane C
 db/          policy, views, seed, migrations
 evals/       cases and runner
 ```
 
-The scaffold lane makes this real and corrects this section if the layout changes.
+The scaffold starts with the documented project and environment files. Each lane adds implementation files only in its owned directories. `docs/schema.local.md` is local only and stays gitignored.
 
 ## Prerequisites
 
@@ -40,20 +40,29 @@ The scaffold lane makes this real and corrects this section if the layout change
 
 ## Local setup
 
-The commands below are targets. The scaffold lane makes them work and edits this section if any name changes.
+Run these commands from the repository root in Windows PowerShell. Each command is on its own line.
 
 1. Environment setup:
-   - Copy `backend/.env.example` to `backend/.env` (backend and shared variable names, empty values).
-   - Copy `frontend/.env.local.example` to `frontend/.env.local` (only `NEXT_PUBLIC_API_BASE_URL`).
+   ```powershell
+   Copy-Item backend/.env.example backend/.env
+   Copy-Item frontend/.env.local.example frontend/.env.local
+   ```
    - The frontend never receives `DATABASE_URL`, any `DATABASE_URL_*` variant, `OPENAI_API_KEY`, or any secret.
    - Fill values yourself. Never commit secret env files. The scaffold lane must ignore secret env files and `.doclock` in `.gitignore` while preserving env example files.
 2. Backend:
-   - `cd backend`
-   - `python -m venv .venv` and activate it
-   - `pip install -r requirements.txt -r requirements-dev.txt`
+   ```powershell
+   Set-Location backend
+   python -m venv .venv
+   .\.venv\Scripts\Activate.ps1
+   python -m pip install -r requirements.txt -r requirements-dev.txt
+   Set-Location ..
+   ```
 3. Frontend:
-   - `cd frontend`
-   - `npm install`
+   ```powershell
+   Set-Location frontend
+   npm install
+   Set-Location ..
+   ```
 4. Database: see "Private copy of the database" below, or load the fabricated dataset with the seed script once it exists (`python -m db.seed`).
 
 ## Environment variables (names only)
@@ -99,9 +108,43 @@ If you get "Connection reset", try in order: add `sslmode=require`, try the dire
 
 ## Running
 
-- Backend: `cd backend && uvicorn app.main:app --reload`
-- Frontend: `cd frontend && npm run dev`
-- Open the frontend URL and pick a role with the toggle.
+From the repository root in Windows PowerShell, start the backend:
+
+```powershell
+Set-Location backend
+python -m uvicorn app.main:app --reload
+```
+
+In a second PowerShell window, start the frontend:
+
+```powershell
+Set-Location frontend
+npm run dev
+```
+
+Open the frontend URL and pick a role with the toggle.
+
+## Frontend
+
+The app is Next.js with TypeScript in `frontend/`. It renders exactly what the response contains: the answer text, a text, table or chart presentation, the evidence panel, and the status with its reason code. It has no role rules of its own. Refusals and errors show the text the response carries.
+
+Current state: Lane A's contract fixtures do not exist yet, so the UI runs on placeholder fixtures in `frontend/lib/fixtures.ts`. They mirror the response shapes in docs/api.md version 0.1 and cover every status, every reason code and all three presentation types. The file is marked `PLACEHOLDER - REPLACE WITH CONTRACT FIXTURES AT INTEGRATION`. While they are in use the sidebar lists one entry per placeholder scenario, so each status can be previewed without faking language understanding. A banner in the header says `PLACEHOLDER FIXTURES`.
+
+Two data paths share one interface in `frontend/lib/api.ts`. When `NEXT_PUBLIC_API_BASE_URL` is set the UI calls the backend contract. When it is empty the UI uses the placeholder fixtures. Components never call a transport directly.
+
+Commands, from `frontend/`:
+
+```powershell
+npm run dev
+npm run build
+npm run lint
+npm run typecheck
+npm test
+```
+
+Environment: copy `frontend/.env.local.example` to `frontend/.env.local` and set `NEXT_PUBLIC_API_BASE_URL` to the backend origin. That variable is the only one the frontend reads. No secret belongs in a `NEXT_PUBLIC_` variable, because everything with that prefix is shipped to the browser.
+
+The role toggle starts a new thread id and clears the visible conversation when the role changes, so history never mixes roles. It is a demo control, not authentication, and the UI says so.
 
 ## Testing
 

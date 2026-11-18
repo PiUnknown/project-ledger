@@ -2,34 +2,32 @@
 
 Describes planned interactions. Nothing is implemented yet. Update only when interactions actually change. Lock protocol is in AGENTS.md.
 
-## Request flow (planned)
+## Request flow
 
 1. The frontend sends POST `/api/chat` with `role`, `thread_id` and `message`.
-2. The backend validates the request and role, applies the per-IP rate limit and daily cap, and builds the role context and the effective thread id.
-3. The LangGraph agent runs: understand the question, plan a data request, execute it through the role executor, assemble evidence, decide the presentation, compose the answer, run the guard scan.
-4. The role executor applies the role policy and limits, then reads from Postgres (private copy locally, fabricated dataset when hosted).
-5. Refusals and no-data outcomes return as normal responses with a `status` field.
-6. The backend returns the JSON contract defined in docs/api.md. The frontend renders text, table or chart plus the evidence panel.
+2. The backend validates the body and role, assigns a request id, applies the per-IP rate limit and daily cap, and builds a role context and effective thread id.
+3. `purchase_manager` returns `role_not_configured`. The current stub agent clarifies other requests and runs only a fixed sample-item operation for explicit demo commands.
+4. The `RoleExecutor` interface passes the operation, row limit and query timeout budget to the fixture-backed mock, which returns fabricated rows and evidence within the configured row cap. No database connection is made.
+5. The backend returns the JSON contract defined in docs/api.md. Validation, rate-limit, daily-cap and timeout failures use the contract error envelope. The frontend renders text, table or chart plus the evidence panel.
 
 ```mermaid
 flowchart TD
     UI["Next.js chat UI with role toggle"] -->|"POST api chat"| API["FastAPI chat route"]
     API --> VAL["Validate request and role, rate limit, daily cap"]
     VAL --> CTX["Build role context and effective thread id"]
-    CTX --> U["Understand question"]
-    U --> P["Plan data request"]
-    P -->|"outside role access"| R["Refusal response"]
-    P --> X["Execute through role executor"]
-    X --> EX["Role executor: policy, limits, read-only"]
-    EX --> DB[("Postgres: private copy or fabricated dataset")]
-    X -->|"data cannot answer"| N["No data response"]
-    X --> E["Assemble evidence"]
-    E --> D["Decide presentation"]
-    D --> W["Compose answer"]
-    W --> G["Guard scan, deterministic"]
-    G --> OUT["Response contract"]
+    CTX --> CAP["Apply per-IP and daily caps"]
+    CAP --> PM{"Purchase manager configured?"}
+    PM -->|"no"| R["role_not_configured response"]
+    PM -->|"other role"| STUB["Deterministic stub agent"]
+    STUB -->|"sample-item command"| X["RoleExecutor interface"]
+    STUB -->|"other request"| CLARIFY["Clarification response"]
+    X -->|"operation, row limit, timeout budget"| EX["Fixture-backed mock executor"]
+    EX --> DATA["Fabricated sample rows and evidence"]
+    DATA --> OUT["Response contract"]
+    CAP -->|"limit exceeded"| ERR["Contract error envelope"]
+    X -->|"timeout"| ERR
+    ERR --> API
     R --> OUT
-    N --> OUT
     OUT --> API
     API -->|"JSON"| UI
 ```
@@ -51,7 +49,52 @@ flowchart TD
     G --> I["Next code edit allowed"]
 ```
 
+## Frontend flow (implemented)
+
+The UI is a pure renderer of the response contract. It holds no role rules. Two data paths sit behind one `ChatClient` interface.
+
+1. On load the UI asks the client for the role list and the health status. When `NEXT_PUBLIC_API_BASE_URL` is set these are GET `/api/roles` and GET `/api/health`. Otherwise the contract fixtures answer them.
+2. The role toggle sets the role, starts a new thread id and clears the visible conversation, so the client never mixes history across roles.
+3. A message is sent through the client with the selected role, the thread id and the message text. While the request is pending the UI shows a loading state and renders no answer.
+4. A response is rendered as it arrives: status badge, reason code, answer text, then the text, table or chart presentation, then the notes. Selecting a response fills the evidence panel from that response's evidence entries only.
+5. A transport failure shows the contract error envelope message and code, or a plain connection message when no envelope was returned, and offers a retry. No answer text is invented for a failure.
+6. When the contract fixtures are in use, the sidebar lists one entry per fixture so every status and presentation can be seen without the UI guessing intent. A header badge says the fixtures come from contract v0.1.
+
+```mermaid
+flowchart TD
+    UI["Chat UI with role toggle"] --> ROLES["Role list and health from ChatClient"]
+    UI --> SW{"Role switched?"}
+    SW -->|"yes"| NEW["New thread id, clear conversation"]
+    SW -->|"no"| SEND
+    NEW --> SEND["Send role, thread id, message through ChatClient"]
+    SEND --> CL{"NEXT_PUBLIC_API_BASE_URL set?"}
+    CL -->|"yes"| HTTP["POST api chat on the backend"]
+    CL -->|"no"| FIX["Contract fixtures"]
+    HTTP --> RESP["Response contract or contract error envelope"]
+    FIX --> RESP
+    RESP --> RENDER["Status, reason code, answer text, presentation, notes"]
+    RESP -->|"error envelope"| FAIL["Error state with retry, no invented answer"]
+    RENDER --> PICK{"Response selected?"}
+    PICK -->|"yes"| EVID["Evidence panel from that response only"]
+```
+
 ## Flow update log
 
 2026-11-18 | Planning | initial planned flow recorded, no implementation
 2026-11-18 | Planning | changed: maintenance diagram clarified to every code edit
+2026-11-18 | Lane 0 | flow unchanged
+2026-11-18 | Lane 0 | flow unchanged
+2026-11-18 | Lane 0 | flow unchanged
+2026-11-18 | Lane 0 | lane0-c4b2 | flow unchanged
+2026-11-18 | Lane A | changed: backend API flow now uses role validation, in-process limits, the stub agent and fabricated mock executor
+2026-11-18 | Lane A | flow unchanged
+2026-11-18 | Lane A | changed: query timeout budget now passes through the agent stub to RoleExecutor
+2026-11-18 | Lane D | flow unchanged
+2026-11-18 | Lane D | flow unchanged
+2026-11-18 | Lane F | laneF-b81c | flow unchanged
+2026-11-18 | Lane C | laneC-4f2b | changed: frontend implemented, added a ChatClient seam with an HTTP path and a placeholder fixture path, role switch resets the thread id, and the evidence panel is filled from the selected response only
+2026-11-18 | Lane A | flow unchanged
+2026-11-18 | Lane D | flow unchanged
+2026-11-18 | Lane C | laneC-4b1e | changed: fixture path now serves Lane A's frozen contract fixtures instead of placeholders, and the live fixture client mirrors the stub agent; interactions and the ChatClient seam are unchanged
+2026-11-18 | Lane E | laneE-8e4a | flow unchanged
+2026-11-18 | Lane A | flow unchanged

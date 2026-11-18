@@ -1,0 +1,433 @@
+{
+  "answered__chart": {
+    "answer_text": "Fabricated contract fixture.",
+    "contract_version": "0.1",
+    "evidence": [
+      {
+        "columns": [
+          "fixture_value"
+        ],
+        "detail": "Synthetic contract fixture.",
+        "executed_at": "2026-01-01T00:00:00+00:00",
+        "id": "fixture-evidence",
+        "kind": "tool",
+        "label": "Fabricated fixture",
+        "row_count": 1,
+        "rows_preview": [
+          {
+            "fixture_value": "Fabricated contract row"
+          }
+        ]
+      }
+    ],
+    "notes": [],
+    "presentation": {
+      "kind": "bar",
+      "rows": [
+        {
+          "fixture_x": "A",
+          "fixture_y": 1
+        }
+      ],
+      "series": [
+        {
+          "key": "fixture_y",
+          "label": "Fixture y"
+        }
+      ],
+      "title": "Fabricated contract chart",
+      "truncated": false,
+      "type": "chart",
+      "x": {
+        "key": "fixture_x",
+        "label": "Fixture x",
+        "type": "string"
+      }
+    },
+    "reason_code": null,
+    "request_id": "fixture-answered__chart",
+    "role": "owner",
+    "status": "answered",
+    "thread_id": "owner:fixture_thread"
+  },
+  "answered__table": {
+    "answer_text": "Fabricated contract fixture.",
+    "contract_version": "0.1",
+    "evidence": [
+      {
+        "columns": [
+          "fixture_value"
+        ],
+        "detail": "Synthetic contract fixture.",
+        "executed_at": "2026-01-01T00:00:00+00:00",
+        "id": "fixture-evidence",
+        "kind": "tool",
+        "label": "Fabricated fixture",
+        "row_count": 1,
+        "rows_preview": [
+          {
+            "fixture_value": "Fabricated contract row"
+          }
+        ]
+      }
+    ],
+    "notes": [],
+    "presentation": {
+      "columns": [
+        {
+          "key": "fixture_value",
+          "label": "Fixture value",
+          "type": "string"
+        }
+      ],
+      "rows": [
+        {
+          "fixture_value": "Fabricated contract row"
+        }
+      ],
+      "total_rows": 1,
+      "truncated": false,
+      "type": "table"
+    },
+    "reason_code": null,
+    "request_id": "fixture-answered__table",
+    "role": "owner",
+    "status": "answered",
+    "thread_id": "owner:fixture_thread"
+  },
+  "answered__text": {
+    "answer_text": "Fabricated contract fixture.",
+    "contract_version": "0.1",
+    "evidence": [
+      {
+        "columns": [
+          "fixture_value"
+        ],
+        "detail": "Synthetic contract fixture.",
+        "executed_at": "2026-01-01T00:00:00+00:00",
+        "id": "fixture-evidence",
+        "kind": "tool",
+        "label": "Fabricated fixture",
+        "row_count": 1,
+        "rows_preview": [
+          {
+            "fixture_value": "Fabricated contract row"
+          }
+        ]
+      }
+    ],
+    "notes": [],
+    "presentation": {
+      "type": "text"
+    },
+    "reason_code": null,
+    "request_id": "fixture-answered__text",
+    "role": "owner",
+    "status": "answered",
+    "thread_id": "owner:fixture_thread"
+  },
+  "error__chart": {
+    "answer_text": "Fabricated contract fixture.",
+    "contract_version": "0.1",
+    "evidence": [],
+    "notes": [],
+    "presentation": {
+      "kind": "bar",
+      "rows": [
+        {
+          "fixture_x": "A",
+          "fixture_y": 1
+        }
+      ],
+      "series": [
+        {
+          "key": "fixture_y",
+          "label": "Fixture y"
+        }
+      ],
+      "title": "Fabricated contract chart",
+      "truncated": false,
+      "type": "chart",
+      "x": {
+        "key": "fixture_x",
+        "label": "Fixture x",
+        "type": "string"
+      }
+    },
+    "reason_code": "unsupported_request",
+    "request_id": "fixture-error__chart",
+    "role": "owner",
+    "status": "error",
+    "thread_id": "owner:fixture_thread"
+  },
+  "error__table": {
+    "answer_text": "Fabricated contract fixture.",
+    "contract_version": "0.1",
+    "evidence": [],
+    "notes": [],
+    "presentation": {
+      "columns": [
+        {
+          "key": "fixture_value",
+          "label": "Fixture value",
+          "type": "string"
+        }
+      ],
+      "rows": [
+        {
+          "fixture_value": "Fabricated contract row"
+        }
+      ],
+      "total_rows": 1,
+      "truncated": false,
+      "type": "table"
+    },
+    "reason_code": "unsupported_request",
+    "request_id": "fixture-error__table",
+    "role": "owner",
+    "status": "error",
+    "thread_id": "owner:fixture_thread"
+  },
+  "error__text": {
+    "answer_text": "Fabricated contract fixture.",
+    "contract_version": "0.1",
+    "evidence": [],
+    "notes": [],
+    "presentation": {
+      "type": "text"
+    },
+    "reason_code": "unsupported_request",
+    "request_id": "fixture-error__text",
+    "role": "owner",
+    "status": "error",
+    "thread_id": "owner:fixture_thread"
+  },
+  "needs_clarification__chart": {
+    "answer_text": "Fabricated contract fixture.",
+    "contract_version": "0.1",
+    "evidence": [],
+    "notes": [],
+    "presentation": {
+      "kind": "bar",
+      "rows": [
+        {
+          "fixture_x": "A",
+          "fixture_y": 1
+        }
+      ],
+      "series": [
+        {
+          "key": "fixture_y",
+          "label": "Fixture y"
+        }
+      ],
+      "title": "Fabricated contract chart",
+      "truncated": false,
+      "type": "chart",
+      "x": {
+        "key": "fixture_x",
+        "label": "Fixture x",
+        "type": "string"
+      }
+    },
+    "reason_code": "ambiguous_entity",
+    "request_id": "fixture-needs_clarification__chart",
+    "role": "owner",
+    "status": "needs_clarification",
+    "thread_id": "owner:fixture_thread"
+  },
+  "needs_clarification__table": {
+    "answer_text": "Fabricated contract fixture.",
+    "contract_version": "0.1",
+    "evidence": [],
+    "notes": [],
+    "presentation": {
+      "columns": [
+        {
+          "key": "fixture_value",
+          "label": "Fixture value",
+          "type": "string"
+        }
+      ],
+      "rows": [
+        {
+          "fixture_value": "Fabricated contract row"
+        }
+      ],
+      "total_rows": 1,
+      "truncated": false,
+      "type": "table"
+    },
+    "reason_code": "ambiguous_entity",
+    "request_id": "fixture-needs_clarification__table",
+    "role": "owner",
+    "status": "needs_clarification",
+    "thread_id": "owner:fixture_thread"
+  },
+  "needs_clarification__text": {
+    "answer_text": "Fabricated contract fixture.",
+    "contract_version": "0.1",
+    "evidence": [],
+    "notes": [],
+    "presentation": {
+      "type": "text"
+    },
+    "reason_code": "ambiguous_entity",
+    "request_id": "fixture-needs_clarification__text",
+    "role": "owner",
+    "status": "needs_clarification",
+    "thread_id": "owner:fixture_thread"
+  },
+  "no_data__chart": {
+    "answer_text": "Fabricated contract fixture.",
+    "contract_version": "0.1",
+    "evidence": [],
+    "notes": [],
+    "presentation": {
+      "kind": "bar",
+      "rows": [
+        {
+          "fixture_x": "A",
+          "fixture_y": 1
+        }
+      ],
+      "series": [
+        {
+          "key": "fixture_y",
+          "label": "Fixture y"
+        }
+      ],
+      "title": "Fabricated contract chart",
+      "truncated": false,
+      "type": "chart",
+      "x": {
+        "key": "fixture_x",
+        "label": "Fixture x",
+        "type": "string"
+      }
+    },
+    "reason_code": "data_not_available",
+    "request_id": "fixture-no_data__chart",
+    "role": "owner",
+    "status": "no_data",
+    "thread_id": "owner:fixture_thread"
+  },
+  "no_data__table": {
+    "answer_text": "Fabricated contract fixture.",
+    "contract_version": "0.1",
+    "evidence": [],
+    "notes": [],
+    "presentation": {
+      "columns": [
+        {
+          "key": "fixture_value",
+          "label": "Fixture value",
+          "type": "string"
+        }
+      ],
+      "rows": [
+        {
+          "fixture_value": "Fabricated contract row"
+        }
+      ],
+      "total_rows": 1,
+      "truncated": false,
+      "type": "table"
+    },
+    "reason_code": "data_not_available",
+    "request_id": "fixture-no_data__table",
+    "role": "owner",
+    "status": "no_data",
+    "thread_id": "owner:fixture_thread"
+  },
+  "no_data__text": {
+    "answer_text": "Fabricated contract fixture.",
+    "contract_version": "0.1",
+    "evidence": [],
+    "notes": [],
+    "presentation": {
+      "type": "text"
+    },
+    "reason_code": "data_not_available",
+    "request_id": "fixture-no_data__text",
+    "role": "owner",
+    "status": "no_data",
+    "thread_id": "owner:fixture_thread"
+  },
+  "refused__chart": {
+    "answer_text": "Fabricated contract fixture.",
+    "contract_version": "0.1",
+    "evidence": [],
+    "notes": [],
+    "presentation": {
+      "kind": "bar",
+      "rows": [
+        {
+          "fixture_x": "A",
+          "fixture_y": 1
+        }
+      ],
+      "series": [
+        {
+          "key": "fixture_y",
+          "label": "Fixture y"
+        }
+      ],
+      "title": "Fabricated contract chart",
+      "truncated": false,
+      "type": "chart",
+      "x": {
+        "key": "fixture_x",
+        "label": "Fixture x",
+        "type": "string"
+      }
+    },
+    "reason_code": "outside_role_access",
+    "request_id": "fixture-refused__chart",
+    "role": "owner",
+    "status": "refused",
+    "thread_id": "owner:fixture_thread"
+  },
+  "refused__table": {
+    "answer_text": "Fabricated contract fixture.",
+    "contract_version": "0.1",
+    "evidence": [],
+    "notes": [],
+    "presentation": {
+      "columns": [
+        {
+          "key": "fixture_value",
+          "label": "Fixture value",
+          "type": "string"
+        }
+      ],
+      "rows": [
+        {
+          "fixture_value": "Fabricated contract row"
+        }
+      ],
+      "total_rows": 1,
+      "truncated": false,
+      "type": "table"
+    },
+    "reason_code": "outside_role_access",
+    "request_id": "fixture-refused__table",
+    "role": "owner",
+    "status": "refused",
+    "thread_id": "owner:fixture_thread"
+  },
+  "refused__text": {
+    "answer_text": "Fabricated contract fixture.",
+    "contract_version": "0.1",
+    "evidence": [],
+    "notes": [],
+    "presentation": {
+      "type": "text"
+    },
+    "reason_code": "outside_role_access",
+    "request_id": "fixture-refused__text",
+    "role": "owner",
+    "status": "refused",
+    "thread_id": "owner:fixture_thread"
+  }
+}

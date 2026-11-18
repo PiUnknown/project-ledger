@@ -1,0 +1,11 @@
+{
+  "notice": "Fabricated fixture only. These sample keys do not describe the supplied database schema.",
+  "columns": [
+    {"key": "sample_item", "label": "Sample item", "type": "string"},
+    {"key": "sample_stock", "label": "Sample stock", "type": "integer"}
+  ],
+  "rows": [
+    {"sample_item": "Fabricated item A", "sample_stock": 12},
+    {"sample_item": "Fabricated item B", "sample_stock": 4}
+  ]
+}
